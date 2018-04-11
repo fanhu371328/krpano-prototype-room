@@ -1,3 +1,6 @@
+
+<!-- author fanhu   917387623@qq.com -->
+
 <krpano version="1.19" title="房产样板间720全景展示"><include url="skin/vtourskin.xml" /><include url="loadinganimation.xml" /><include url="loadingpercenttext.xml" /><include url="loadingbar.xml" /><skin_settings maps="false"
 	               maps_type="google"
 	               maps_bing_api_key=""
