@@ -1,0 +1,100 @@
+<krpano version="1.19" title="房产样板间720全景展示"><include url="skin/vtourskin.xml" /><include url="loadinganimation.xml" /><include url="loadingpercenttext.xml" /><include url="loadingbar.xml" /><skin_settings maps="false"
+	               maps_type="google"
+	               maps_bing_api_key=""
+	               maps_google_api_key=""
+	               maps_zoombuttons="false"
+	               gyro="true"
+	               webvr="true"
+	               webvr_gyro_keeplookingdirection="false"
+	               webvr_prev_next_hotspots="true"
+	               littleplanetintro="true"
+	               title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="true"
+	               thumbs_text="false"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_buttons="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="false"
+	               tooltips_mapspots="false"
+	               deeplinking="false"
+	               loadscene_flags="MERGE"
+	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+	               loadingtext=""
+	               layout_width="100%"
+	               layout_maxwidth="814"
+	               controlbar_width="-24"
+	               controlbar_height="40"
+	               controlbar_offset="20"
+	               controlbar_offset_closed="-40"
+	               controlbar_overlap.no-fractionalscaling="10"
+	               controlbar_overlap.fractionalscaling="0"
+	               design_skin_images="vtourskin.png"
+	               design_bgcolor="0x2D3E50"
+	               design_bgalpha="0.8"
+	               design_bgborder="0"
+	               design_bgroundedge="1"
+	               design_bgshadow="0 4 10 0x000000 0.3"
+	               design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+	               design_thumbborder_padding="2"
+	               design_thumbborder_bgroundedge="0"
+	               design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+	               /><action name="startup" autorun="onstart">
+			if(startscene === null, copy(startscene,scene[0].name));
+			loadscene(get(startscene), null, MERGE);
+		</action><autorotate enabled="true" waittime="1" accel="1" speed="10" horizon="0" tofov="NaN"/><action name="bgsnd_action" autorun="onstart">
+			playsound(bgsnd, 'music/1.mp3', 0);
+		</action><plugin url="%SWFPATH%/plugins/soundinterface.swf" name="soundinterface" keep="true" preload="true" rootpath="" alturl="%SWFPATH%/plugins/soundinterface.js"/><plugin name="sndbt" url="%SWFPATH%/music/soundonoff.png" align="left top" x="5" y="5"  scale="0.75" keep="true"
+			    onover="tween(alpha,1);" 
+			    onout="tween(alpha,0.45);" 
+				crop="0|0|50|50"
+				onhover="showtext(播放/暂停语音解说,STYLE2);"
+				zorder="100"
+		        onclick="switch(soundinterface.mute); switch(crop, 0|0|50|50, 0|50|50|50);" /><hotspot name="nadirlogo"
+			 	 url="lingfeng.png"
+		         keep="true"
+			 	 ath="0"
+			 	 atv="90"
+		         distorted="true"
+			 	 scale="1.0"
+			 	 rotate="0.0"
+		         /><events name="logo_excluded" keep="true" onnewpano="if(xml.scene == 'scene_6',set(hotspot[nadirlogo].visible,false),set(hotspot[nadirlogo].visible,true))"/><events name="nadirlogorotation"
+		        keep="true"
+			    onviewchange="copy(hotspot[nadirlogo].rotate,view.hlookat);"
+			    /><layer name="mapcontainer" keep="true" type="container" bgcolor="0x000000" bgalpha="0.3" align="righttop" x="0" y="0" width="264" height="264"><layer name="map" url="skin/b1map.png" align="center" x="4" y="4" width="prop" height="256" handcursor="false" scalechildren="true"><layer name="radarmask" type="container" align="lefttop" width="100%" height="100%" maskchildren="true"><layer name="radar" visible="false"
+					       url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+					       align="lefttop" edge="center" zorder="1"
+					       scale="0.3"
+					       fillcolor="0xFFFFFF" fillalpha="0.8"
+					       linecolor="0xFF0000" linewidth="0.5" linealpha="0.5"
+					       headingoffset="0"
+				       /><layer name="spot0" style="spot" x="113" y="124"  /><layer name="spot1" style="spot" x="94" y="62"  /><layer name="spot2" style="spot" x="55"  y="34"   /><layer name="spot3" style="spot" x="13" y="58"  /><layer name="activespot" url="skin/vtourskin_mapspotactive.png" scale="0.5" oy="-17" align="lefttop" edge="center" zorder="3" visible="false"/></layer></layer></layer><style name="spot" url="skin/vtourskin_mapspot.png" scale="0.5" oy="-17" align="lefttop" edge="center" zorder="2" onclick="subtxt(spotid,get(name),4,2);if(spotid != scene[get(xml.scene)].index,  
+	  loadscene(get(scene[get(spotid)].name),null,MERGE,BLEND(1)); );" /><action name="activatespot">  
+	      
+	    for(set(i,0),i LT scene.count,inc(i),  
+	    txtadd(spotname,'spot',get(i));  
+	    set(layer[get(spotname)].visible, true);  
+	    );  
+	      
+	    txtadd(spotidnow,'spot',get(scene[get(xml.scene)].index));  
+	    copy(layer[radar].x, layer[get(spotidnow)].x);  
+	    copy(layer[radar].y, layer[get(spotidnow)].y);  
+	    copy(layer[activespot].x, layer[get(spotidnow)].x);  
+	    copy(layer[activespot].y, layer[get(spotidnow)].y);  
+	  
+	      
+	    set(layer[radar].heading, %1);  
+	  
+	      
+	    set(layer[radar].visible, true);  
+	    set(layer[activespot].visible, true);  
+	    set(layer[get(spotidnow)].visible, false);  
+    </action><scene name="客厅" title="客厅" onstart="activatespot(90)" thumburl="panos/2kt.tiles/thumb.jpg" lat="" lng="" heading=""><view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" /><preview url="panos/2kt.tiles/preview.jpg" /><image><cube url="panos/2kt.tiles/pano_%s.jpg" /><mobile><cube url="panos/2kt.tiles/mobile_%s.jpg" /></mobile></image></scene><scene name="厨房" title="厨房" onstart="activatespot(90)" thumburl="panos/b1cf.tiles/thumb.jpg" lat="" lng="" heading=""><view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" /><preview url="panos/b1cf.tiles/preview.jpg" /><image><cube url="panos/b1cf.tiles/pano_%s.jpg" /><mobile><cube url="panos/b1cf.tiles/mobile_%s.jpg" /></mobile></image></scene><scene name="餐厅" title="餐厅" onstart="activatespot(90)" thumburl="panos/b1ct.tiles/thumb.jpg" lat="" lng="" heading=""><view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" /><preview url="panos/b1ct.tiles/preview.jpg" /><image><cube url="panos/b1ct.tiles/pano_%s.jpg" /><mobile><cube url="panos/b1ct.tiles/mobile_%s.jpg" /></mobile></image></scene><scene name="书房" title="书房" onstart="activatespot(90)" thumburl="panos/b1etf.tiles/thumb.jpg" lat="" lng="" heading=""><view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" /><preview url="panos/b1etf.tiles/preview.jpg" /><image><cube url="panos/b1etf.tiles/pano_%s.jpg" /><mobile><cube url="panos/b1etf.tiles/mobile_%s.jpg" /></mobile></image></scene></krpano>
